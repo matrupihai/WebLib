@@ -8,7 +8,7 @@ import com.weblib.hbm.model.Author;
 import com.weblib.hbm.model.Book;
 
 public class AuthorDAOImpl extends GenericDAOImpl<Author, Integer> {
-
+	
 	public Author insertAuthor(Author author) {
 		insert(author);
 		return author;
