@@ -7,7 +7,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.jayway.jaxrs.hateoas.Linkable;
 import com.weblib.dao.PublisherDAOImpl;
 
 @Path ("/publishers")
@@ -22,7 +21,6 @@ public class PublisherResource {
 	
 	@GET
 	@Produces (MediaType.APPLICATION_JSON)
-	@Linkable ("publisher.get")
 	@Path ("{id}")
 	public Response getPublisherById(@PathParam ("id") Integer id) {
 		return Response.ok(dao.findPublisherById(id)).build(); 

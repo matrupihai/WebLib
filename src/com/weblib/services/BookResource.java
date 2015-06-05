@@ -10,7 +10,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.jayway.jaxrs.hateoas.core.HateoasResponse;
 import com.weblib.dao.BookDAOImpl;
 import com.weblib.hbm.model.Book;
 import com.weblib.hbm.model.BookCopy;
@@ -34,7 +33,7 @@ public class BookResource {
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response getBookById(@PathParam("isbn") Integer isbn) {
 		Book book = dao.findBookByIsbn(isbn);
-		return HateoasResponse.ok(book).link("publisher.get", "publisher", book.getPublisher().getPublisherId()).build();
+		return Response.ok(book).build();
 	}
 	
 	@GET

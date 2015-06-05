@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+  "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect">org.hibernate.dialect.SybaseDialect</property>
+		<property name="hibernate.connection.driver_class">com.sybase.jdbc4.jdbc.SybDriver</property>
+		<property name="hibernate.connection.url">jdbc:sybase:Tds:localhost:2639/library_test</property>
+		<property name="hibernate.connection.username">DBA</property>
+		<property name="hibernate.connection.password">dba</property>
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="show_sql">true</property>
+		
+<!-- 		<property name = "transaction.factory_class">
+			org.hibernate.transaction.JDBCTransactionFactory
+		</property>
+	  	<property name="hibernate.transaction.factory_class">
+	  		org.hibernate.transaction.JTATransactionFactory	
+	  	</property> -->
+	  	<property name="hibernate.current_session_context_class">
+	  		org.hibernate.context.internal.ThreadLocalSessionContext
+	  	</property>
+		
+		<mapping class="com.weblib.hbm.model.Author" />
+		<mapping class="com.weblib.hbm.model.Publisher" />
+		<mapping class="com.weblib.hbm.model.Book" />
+		<mapping class="com.weblib.hbm.model.BookCopy" />
+		<mapping class="com.weblib.hbm.model.User" />
+		<mapping class="com.weblib.hbm.model.Loan" />
+		<mapping class="com.weblib.hbm.model.Subject" />
+		
+	</session-factory>
+</hibernate-configuration>
