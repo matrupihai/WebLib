@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -29,6 +30,11 @@ public class AuthorDAOImplTest {
 					$("albert camus"),
 					$("george orwell")
 				);
+	}
+	
+	@After
+	public void sayGoodBye() {
+		System.out.println("Good bye " + this.getClass().getSimpleName());
 	}
 	
 }
