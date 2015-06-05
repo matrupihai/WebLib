@@ -42,13 +42,10 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 	@Override
 	public List<T> findAll() {
 		List<T> list = new ArrayList<T>();
-		Transaction transaction = null;
 		try {
 			Session session = getSession();
-			transaction = session.beginTransaction();
 			Query query = session.createQuery("from " + objectType.getSimpleName());
 			list.addAll(query.list());
-			transaction.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -64,7 +61,6 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 			transaction = session.beginTransaction();
 			Query query = session.createQuery(queryString);
 			list.addAll(query.list());
-			transaction.commit();
 		
 		} catch (Exception e) {
 			e.printStackTrace();
