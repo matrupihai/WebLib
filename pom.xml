@@ -100,10 +100,15 @@
 			<version>3.1.0</version>
 		</dependency>
 		<dependency>
-  			<groupId>pl.pragmatists</groupId>
-  			<artifactId>JUnitParams</artifactId>
-  			<version>1.0.4</version>
-  			<scope>test</scope>
+			<groupId>pl.pragmatists</groupId>
+			<artifactId>JUnitParams</artifactId>
+			<version>1.0.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-declarative-linking</artifactId>
+			<version>2.19</version>
 		</dependency>
 	</dependencies>
 	<repositories>

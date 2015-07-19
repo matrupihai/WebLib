@@ -27,7 +27,7 @@ import org.codehaus.jackson.annotate.JsonManagedReference;
 @Entity
 @Table (name="DBA.\"102_BOOKS\"")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Book {
+public class Book extends LinkableObject {
 	@Id
 	@Column (name = "isbn")
 	@GeneratedValue (strategy = GenerationType.AUTO)

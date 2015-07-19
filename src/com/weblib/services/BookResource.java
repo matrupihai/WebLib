@@ -1,5 +1,6 @@
 package com.weblib.services;
 
+import java.net.URI;
 import java.util.Set;
 
 import javax.ws.rs.GET;
@@ -7,15 +8,22 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import com.weblib.dao.BookDAOImpl;
+import com.weblib.hbm.model.Author;
 import com.weblib.hbm.model.Book;
 import com.weblib.hbm.model.BookCopy;
 
 @Path ("/books")
 public class BookResource {
+	@Context
+	UriInfo uriInfo;
+	
 	BookDAOImpl dao = new BookDAOImpl();
 	
 	@GET
@@ -33,6 +41,8 @@ public class BookResource {
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response getBookById(@PathParam("isbn") Integer isbn) {
 		Book book = dao.findBookByIsbn(isbn);
+		addAuthorsLinks(book);
+		
 		return Response.ok(book).build();
 	}
 	
@@ -44,4 +54,13 @@ public class BookResource {
 		return Response.ok(result).header("result-count", result.size()).build();
 	}
 	
+	private void addAuthorsLinks(Book book) {
+		UriBuilder ub = uriInfo.getAbsolutePathBuilder();
+		for (Author author : book.getAuthors()) {
+			URI authorUri = ub.path(AuthorResource.class)
+					.path(String.valueOf(author.getAuthorId()))
+					.build();
+			author.addLink(authorUri.toASCIIString(), "author");
+		}
+	}
 }

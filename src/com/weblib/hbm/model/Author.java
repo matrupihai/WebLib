@@ -18,14 +18,14 @@ import org.codehaus.jackson.annotate.JsonBackReference;
 
 @Entity
 @Table (name="DBA.\"100_AUTHORS\"")
-public class Author implements Serializable {
-
+public class Author extends LinkableObject implements Serializable {
+	
 	@Id
-	@Column (name="author_id")
+	@Column (name = "author_id")
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private int authorId;
 
-	@Column (name="author_name")
+	@Column (name = "author_name")
 	private String authorName;
 	
 	@JsonBackReference
