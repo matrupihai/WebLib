@@ -113,7 +113,7 @@ function renderBook(book, findCopies) {
 }
 
 $(document).on("click", ".borrowBook", function(event) {
-	var bookCard = $(event.target).closest(".bookCard"); 
+	var bookCard = $(event.target).closest(".bookCard");
 	var bookJson = JSON.parse(jQuery.data(bookCard[0], "bookModel"));
 	console.log("Book (isbn: " + bookJson.isbn + ") borrowed!");
 });

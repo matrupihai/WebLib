@@ -23,8 +23,7 @@ import com.weblib.hbm.model.BookCopy;
 public class BookResource {
 	@Context
 	UriInfo uriInfo;
-	
-	BookDAOImpl dao = new BookDAOImpl();
+	private BookDAOImpl dao = new BookDAOImpl();
 	
 	@GET
 	@Produces (MediaType.APPLICATION_JSON)

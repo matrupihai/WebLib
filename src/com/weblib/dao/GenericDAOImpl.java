@@ -70,12 +70,19 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 	}
 	
 	public T findByString(String varFieldName, String value) {
+		return findByString(varFieldName, value, true);
+	}
+	
+	public T findByString(String varFieldName, String value, boolean exactMatch) {
 		T result = null;
 		Transaction transaction = null;
 		try {
 			Session session = getSession();
 			transaction = session.beginTransaction();
 			Criteria crit = session.createCriteria(objectType);
+			if (!exactMatch) {
+				value = "%" + value + "%";
+			}
 			crit.add(Restrictions.like(varFieldName, value));
 			result  = (T) crit.uniqueResult();
 			transaction.commit();
@@ -101,6 +108,12 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 		if (id == null) {
 			throw new IllegalArgumentException("The id cannot be null)");
 		}
+	}
+	
+	public List<String> searchText(String searchTerm) {
+		List<String> results = new ArrayList<String>();
+		
+		return results;
 	}
 	
 	private Session getSession() {
