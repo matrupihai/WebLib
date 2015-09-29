@@ -5,7 +5,8 @@ $("document").ready(function() {
 		source: function (request, response) {
 			getSearchResults(request, response);
 		},
-		minLength: 2
+		minLength: 3,
+		delay: 500
 	});
 });
 

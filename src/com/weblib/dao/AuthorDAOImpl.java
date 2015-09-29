@@ -48,6 +48,16 @@ public class AuthorDAOImpl extends GenericDAOImpl<Author, Integer> {
 
 		return new HashSet<Book>();
 	}
-
-
+	
+	public Set<String> searchAuthor(String searchTerm) {
+		Set<String> searchResults = new HashSet<>();
+		Set<Author> authors = genericFind("from " + getObjectType().getSimpleName() + " where authorName like '%" + searchTerm + "%'");
+		
+		for (Author author : authors) {
+			searchResults.add(author.getAuthorName());
+		}
+		
+		return searchResults;
+	}
+	
 }
