@@ -3,7 +3,9 @@ package com.weblib.dao;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -53,20 +55,20 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 		return list;
 	}
 	
-	public List<T> genericFind(String queryString) {
-		List<T> list = new ArrayList<T>();
-		Transaction transaction = null;
+	public Set<T> genericFind(String queryString) {
+		Set<T> resultSet = new HashSet<T>();
 		try {
 			Session session = getSession();
-			transaction = session.beginTransaction();
-			Query query = session.createQuery(queryString);
-			list.addAll(query.list());
+			if (session != null) {
+				Query query = session.createQuery(queryString);
+				resultSet.addAll(query.list());
+			}
 		
 		} catch (Exception e) {
-			e.printStackTrace();
+			// throw new runtime exception and map it to a response
 		} 
 		
-		return list;
+		return resultSet;
 	}
 	
 	public T findByString(String varFieldName, String value) {
@@ -76,19 +78,26 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 	public T findByString(String varFieldName, String value, boolean exactMatch) {
 		T result = null;
 		Transaction transaction = null;
+		Session session = null;
 		try {
-			Session session = getSession();
-			transaction = session.beginTransaction();
-			Criteria crit = session.createCriteria(objectType);
-			if (!exactMatch) {
-				value = "%" + value + "%";
+			session = getSession();
+			if (session != null) {
+				transaction = session.beginTransaction();
+				Criteria crit = session.createCriteria(objectType);
+				if (!exactMatch) {
+					value = "%" + value + "%";
+				}
+				crit.add(Restrictions.like(varFieldName, value));
+				result  = (T) crit.uniqueResult();
+				session.getTransaction().commit();;
 			}
-			crit.add(Restrictions.like(varFieldName, value));
-			result  = (T) crit.uniqueResult();
-			transaction.commit();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
 		}
         
         return result;
@@ -110,14 +119,12 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 		}
 	}
 	
-	public List<String> searchText(String searchTerm) {
-		List<String> results = new ArrayList<String>();
-		
-		return results;
-	}
-	
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
+	}
+	
+	public Class<T> getObjectType() {
+		return objectType;
 	}
 	
 }

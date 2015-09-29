@@ -6,7 +6,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 import org.codehaus.jackson.map.SerializationConfig;
 
-public class JsonHelper {
+public class JsonUtil {
 	
 	public static String objectToJson(Object... objects) {
 		StringBuilder json = new StringBuilder();
