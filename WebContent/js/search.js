@@ -18,7 +18,9 @@ function getSearchResults(request, response) {
 		success: function(data) {
 			response(data);
 		},
-		error: console.log("Something went wrong")
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log(jqXHR.error);
+		}
 	});
 }
 
