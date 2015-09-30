@@ -77,19 +77,16 @@ public class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
 	
 	public T findByString(String varFieldName, String value, boolean exactMatch) {
 		T result = null;
-		Transaction transaction = null;
 		Session session = null;
 		try {
 			session = getSession();
 			if (session != null) {
-				transaction = session.beginTransaction();
 				Criteria crit = session.createCriteria(objectType);
 				if (!exactMatch) {
 					value = "%" + value + "%";
 				}
 				crit.add(Restrictions.like(varFieldName, value));
 				result  = (T) crit.uniqueResult();
-				session.getTransaction().commit();;
 			}
 			
 		} catch (Exception e) {
