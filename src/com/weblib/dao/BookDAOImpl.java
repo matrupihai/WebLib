@@ -21,7 +21,7 @@ public class BookDAOImpl extends GenericDAOImpl<Book, Integer> {
 	public Book findBookByTitle(String title) {
 		return findByString("title", title);
 	}
-
+	
 	public Book findBookByIsbn(Integer isbn) {
 		return findById(isbn);
 	}
@@ -33,6 +33,17 @@ public class BookDAOImpl extends GenericDAOImpl<Book, Integer> {
 		}
 
 		return new HashSet<BookCopy>();
+	}
+	
+	public Set<String> searchBook(String searchTerm) {
+		Set<String> searchResults = new HashSet<>();
+		Set<Book> books = genericFind("from " + getObjectType().getSimpleName() + " where title like '%" + searchTerm + "%'");
+		
+		for (Book book : books) {
+			searchResults.add(book.getTitle());
+		}
+		
+		return searchResults;
 	}
 
 }

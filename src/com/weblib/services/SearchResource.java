@@ -10,17 +10,19 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.weblib.dao.AuthorDAOImpl;
+import com.weblib.dao.BookDAOImpl;
 import com.weblib.json.JsonUtil;
 
 @Path ("/search")
 public class SearchResource {
 	
-	private AuthorDAOImpl authorDAO = new AuthorDAOImpl(); 
+//	private AuthorDAOImpl authorDAO = new AuthorDAOImpl(); 
+	private BookDAOImpl bookDAO = new BookDAOImpl();
 	
 	@GET
 	@Produces (MediaType.APPLICATION_JSON)
 	public Response searchText(@QueryParam ("q") String q) {
-		Set<String> authors = authorDAO.searchAuthor(q);
+		Set<String> authors = bookDAO.searchBook(q);
 		return Response.ok(JsonUtil.objectToJson(authors)).build();
 	}
 	

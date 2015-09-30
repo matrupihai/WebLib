@@ -1,4 +1,7 @@
-var searchUrl = "http://localhost:8080/WebLib/search";
+var baseUrl = "http://localhost:8080/WebLib/";
+var searchUrl = baseUrl + "search";
+var booksUrl = baseUrl + "/books?title="
+
 
 $("document").ready(function() {
 	$("#globalSearch").autocomplete({
@@ -18,7 +21,12 @@ function getSearchResults(request, response) {
 		success: function(data) {
 			response(data);
 		},
-		error: console.log("Something went wrong")
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log(jqXHR.error);
+		},
+		select: function(event, ui) {
+			findBooks(booksUrl + ui.item.value)
+		}
 	});
 }
 

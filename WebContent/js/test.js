@@ -1,18 +1,16 @@
-
-var booksUrl = "http://localhost:8080/WebLib/books";
 var loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
 "Suspendisse dapibus cursus eros. Nunc euismod nisl sed dapibus feugiat. " +
 "Nullam at metus et turpis dictumelementum.";
 
-$("document").ready(
-	findAllBooks()
-);
+/*$("document").ready(
+	findBooks()
+);*/
 
-function findAllBooks() {
+function findBooks(url) {
 	console.log("findAllBooks");
 	$.ajax({
 		type: "GET",
-		url: booksUrl,
+		url: url,
 		dataType: "json", 
 		success: renderBooksList
 	});
